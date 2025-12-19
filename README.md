@@ -240,20 +240,3 @@ A weighted score combining:
 ✔ Event impact (festivals, emergencies) on satisfaction & morale
 ✔ Services with high refusal rates needing attention
 ✔ High-utilization vs low-utilization staff
-
-
-## 🎯 Why This Project Stands Out
-
-This project demonstrates:
-
-Strong SQL engineering skills
-
-Ability to build multi-layer analytics
-
-Practical business intelligence thinking
-
-Clean data modeling with CTEs + window functions
-
-Real-world healthcare analytics understanding
-
-It is resume-ready and perfect for a GitHub portfolio.
