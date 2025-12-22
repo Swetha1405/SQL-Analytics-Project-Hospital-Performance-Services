@@ -148,8 +148,18 @@ and p.service in (
    ========================================================= */
 
 -- Categorize services based on average satisfaction
--- (Day 9 – CASE statement)
--- Add your query here
+select service,
+count(patient_admitted) as total_patients_admitted,
+avg(satisfaction) as avg_satisfaction,
+case
+    when satisfaction>=85 then 'Excellent'
+    when satisfaction>=75 then 'Good'
+	when satisfaction>=65 then 'Fair'
+else  'Needs Improvement' 
+end as performance_category
+from services_weekly
+group by service
+order by avg_satisfaction desc;
 
 
 
@@ -161,13 +171,28 @@ and p.service in (
    ========================================================= */
 
 -- Weekly admissions trend per service
--- (Day 10 – ORDER BY + trends)
--- Add your query here
+SELECT
+    service,
+    week,
+    patients_admitted
+FROM services_weekly
+ORDER BY service, week;
+
 
 
 -- Moving average of satisfaction per service
--- (Day 20 – Window Functions)
--- Add your query here
+SELECT
+    service,
+    week,
+    patient_satisfaction,
+    AVG(patient_satisfaction) OVER (
+        PARTITION BY service
+        ORDER BY week
+        ROWS BETWEEN 3 PRECEDING AND CURRENT ROW
+    ) AS moving_avg_4_week
+FROM services_weekly
+ORDER BY service, week;
+
 
 
 
@@ -179,8 +204,9 @@ and p.service in (
    ========================================================= */
 
 -- Rank services by total patients admitted
--- (Day 19 – RANK / DENSE_RANK)
--- Add your query here
+select service, patients_admitted,
+rank() over (order by patients_admitted desc) as rnk,
+dense_rank() over (order by patients_admitted desc) as dense_rnk from services_weekly;
 
 
 
@@ -193,8 +219,72 @@ and p.service in (
    ========================================================= */
 
 -- Service-level summary using CTE
--- (Day 21 – CTEs)
--- Add your query here
+WITH 
+-- 1) SERVICE-LEVEL METRICS
+service_metrics AS (
+    SELECT
+        s.service_id,
+        s.service_name,
+        COUNT(p.patient_id) AS total_patients,
+        SUM(CASE WHEN p.admission_status = 'Admitted' THEN 1 ELSE 0 END) AS total_admissions,
+        SUM(CASE WHEN p.admission_status = 'Refused' THEN 1 ELSE 0 END) AS total_refusals,
+        AVG(p.satisfaction_score) AS avg_satisfaction,
+        -- Admission rate = admitted / total
+        AVG(CASE WHEN p.admission_status = 'Admitted' THEN 1.0 ELSE 0.0 END) AS admission_rate
+    FROM services s
+    LEFT JOIN patients p ON s.service_id = p.service_id
+    GROUP BY s.service_id, s.service_name
+),
+
+-- 2) STAFF METRICS
+staff_metrics AS (
+    SELECT
+        s.service_id,
+        COUNT(st.staff_id) AS total_staff,
+        AVG(st.weeks_present) AS avg_weeks_present
+    FROM services s
+    LEFT JOIN staff st ON s.service_id = st.service_id
+    GROUP BY s.service_id
+),
+
+-- 3) PATIENT DEMOGRAPHICS
+patient_demo AS (
+    SELECT
+        s.service_id,
+        AVG(p.age) AS avg_age,
+        COUNT(p.patient_id) AS patient_count
+    FROM services s
+    LEFT JOIN patients p ON s.service_id = p.service_id
+    GROUP BY s.service_id
+),
+
+-- 4) FINAL COMBINED REPORT
+final_report AS (
+    SELECT
+        sm.service_name,
+        sm.total_admissions,
+        sm.total_refusals,
+        sm.avg_satisfaction,
+        sm.admission_rate,
+        stm.total_staff,
+        stm.avg_weeks_present,
+        pd.avg_age,
+        pd.patient_count,
+
+        -- Performance Score = Weighted average
+        -- 70% weight → Admission rate
+        -- 30% weight → Satisfaction score normalized to 0–1
+        (0.7 * sm.admission_rate) + 
+        (0.3 * (sm.avg_satisfaction / 100)) AS performance_score
+    FROM service_metrics sm
+    LEFT JOIN staff_metrics stm ON sm.service_id = stm.service_id
+    LEFT JOIN patient_demo pd ON sm.service_id = pd.service_id
+)
+
+SELECT *
+FROM final_report
+ORDER BY performance_score DESC;
+
 
 
 
