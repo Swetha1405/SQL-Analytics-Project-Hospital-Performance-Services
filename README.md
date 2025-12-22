@@ -1,242 +1,155 @@
-# 📊 Hospital Performance SQL Analytics Project
+🏥 Hospital Performance Analytics using SQL
+📌 Project Overview
 
-End-to-end SQL project analyzing hospital operations, patient satisfaction, and staff utilization
+This project focuses on analyzing hospital performance data using SQL to generate meaningful insights related to patients, services, and staff utilization.
+The objective is to demonstrate Data Analyst–level analytical thinking by solving real-world business problems using structured SQL queries.
 
-## 📌 Project Overview
+🎯 Objectives
 
-This project is a comprehensive SQL analytics case study built using a multi-table hospital dataset.
-It simulates real-world healthcare analytics by combining:
+Analyze service-level hospital performance
 
-✔ Patient records
+Understand patient demographics and satisfaction trends
 
-✔ Weekly service metrics
+Evaluate staff distribution and utilization
 
-✔ Staff data
+Build analytical SQL queries suitable for dashboards and reports
 
-✔ Staff attendance schedules
+Apply intermediate to advanced SQL concepts used in Data Analyst roles
 
-Using SQL, I developed service-level dashboards, staffing insights, patient demographic reports, and operational KPIs.
-The project consolidates all analysis into a final hospital performance dashboard using multi-CTE logic.
+📂 Dataset Description
 
-## 🛠 Skills Demonstrated
-SQL Fundamentals
+The project uses multiple relational tables representing hospital operations.
 
-Filtering & sorting
+🗃️ Tables Used
 
-Aggregations (SUM, AVG, COUNT, MIN/MAX)
+patients – patient details, age, service, satisfaction
 
-DISTINCT queries
+services_weekly – weekly service metrics (admissions, refusals, satisfaction)
 
-Intermediate SQL
+staff – staff details and service assignments
 
-GROUP BY + HAVING
+staff_attendance / schedules – staff availability data
 
-JOINs (INNER, LEFT JOIN)
+(Dataset is simulated for analytical learning purposes)
 
-Subqueries
+🔍 Key SQL Skills Demonstrated
 
-Derived tables
+Common Table Expressions (CTEs) for modular queries
 
-Advanced SQL
-
-Window functions:
-
-RANK(), DENSE_RANK()
+Window Functions
 
 ROW_NUMBER()
 
-Running totals
+RANK()
 
-Moving averages
+AVG() OVER()
 
-CASE statements for classification
+Running totals & moving averages
 
-CTE-based dashboard development
+Aggregations & Grouping
 
-Multi-CTE data modeling
+Joins (INNER, LEFT)
 
-Analytics & Business Skills
+Subqueries & Derived Tables
 
-Admission & refusal rate analysis
+CASE statements
 
-Patient satisfaction trends
+Date & Time functions
 
-Staff utilization measurement
+📊 Analysis Performed
+1️⃣ Patient Analytics
 
-Event impact analysis
+Patient distribution by service
 
-Service performance scoring
+Age-based segmentation
 
-Trend & variance analysis
+Identification of high-demand services
 
-## 📁 Dataset Structure
-### 1. patients
+Satisfaction score analysis
 
-patient_id, name, age, arrival_date, departure_date
+2️⃣ Service Performance Analytics
 
-satisfaction score
+Admissions and refusals by service
 
-service
+Weekly trends and cumulative analysis
 
-### 2. services_weekly
+Comparison of current performance vs service averages
 
-week, service
+Ranking services based on performance
 
-patients_request
-
-patients_admitted
-
-patients_refused
-
-patient_satisfaction
-
-staff_morale
-
-event, available_beds
-
-### 3. staff
-
-staff_id, staff_name
-
-role (doctor/nurse/support)
-
-service
-
-### 4. staff_schedule
-
-staff_id, staff_name
-
-service, role
-
-week, present (1/0)
-
-## 📌 Key Analytical Components
-
-### ⭐ 1. Patient Demographics & Behavior Analysis
-
-Age distribution & service-wise segmentation
-
-Arrival date trends
-
-Length of stay calculation
-
-Satisfaction categorization
-
-High vs. low satisfaction cohorts
-
-Patient counts by service
-
-Identifying services with below/above average satisfaction
-
-Skills Used:
-CASE, DATEDIFF, GROUP BY, HAVING, ORDER BY, window functions.
-
-### ⭐ 2. Service Performance Analysis
-
-Total patients admitted & refused
-
-Weekly trends (week 1–52)
-
-Top services by admissions & satisfaction
-
-Services with poor performance: high refusals + low satisfaction
-
-Admission rate calculation
-
-Event impact analysis on staff morale & satisfaction
-
-Skills Used:
-SUM, AVG, RANK(), moving averages, PARTITION BY.
-
-### ⭐ 3. Staffing & Utilization Insights
+3️⃣ Staff Utilization Analytics
 
 Staff count per service
 
-Medical vs Support categorization
+Average staff availability
 
-Staff presence weekly
+Services with above/below average staffing
 
-Staff utilization metrics:
+Correlation between staffing levels and admissions
 
-total days present
+4️⃣ Hospital Performance Dashboard (SQL-Based)
 
-total weeks present
+Combined metrics using multiple CTEs
 
-average attendance per service
+Service-level KPIs
 
-Staff-to-patient service mapping
+Calculated performance scores
 
-Skills Used:
-JOIN, LEFT JOIN, aggregation subqueries, derived tables.
+Ranked services by overall effectiveness
 
-### ⭐ 4. Multi-table Analysis
+📌 Business Questions Answered
 
-Linking patient → service → staff → schedule
+Which hospital services are performing best overall?
 
-Understanding staffing availability per patient
+Are staffing levels aligned with patient demand?
 
-Service-week alignment
+Which services show improving or declining trends?
 
-Identifying services with understaffing
+How does staffing availability impact service outcomes?
 
-Skills Used:
-Complex JOINs, multi-level joins, NULL handling.
+Which services require operational attention?
 
-### ⭐ 5. Advanced SQL Window Function Applications
+🛠️ Tools & Technologies
 
-Weekly cumulative admissions
+SQL (MySQL-compatible)
 
-3-week & 4-week moving averages
+GitHub for version control
 
-Ranking best-performing services & weeks
+Analytical query structuring for reporting use cases
 
-Row numbering for staff & patients
+🚀 Key Learnings
 
-Trend analysis using window frames
+Designing end-to-end analytical SQL solutions
 
-Skills Used:
-WINDOW FUNCTIONS, ROWS BETWEEN, ORDER BY, PARTITION BY.
+Writing clean, scalable, and readable queries
 
-### ⭐ 6. Final Hospital Performance Dashboard (CTE-driven)
+Breaking complex analytical problems into logical steps
 
-A 4-CTE final dashboard summarizing:
+Translating data into actionable business insights
 
-Service-Level Metrics
+🔮 Future Enhancements
 
-Total admissions
+Build Power BI dashboards using query outputs
 
-Total refusals
+Add ER diagrams for data modeling clarity
 
-Average satisfaction
+Include query result snapshots
 
-Admission rate
+Publish this analysis as a portfolio case study
 
-Staff Metrics
+👩‍💻 About Me
 
-Total staff assigned
+Swetha Avadanam
+Aspiring Data Analyst with hands-on experience in SQL analytics, focused on building data-driven insights through practical projects.
 
-Average weeks present
+⭐ For Recruiters & Hiring Managers
 
-Total staff days present
+This project demonstrates my ability to:
 
-Patient Demographics
+Work with relational datasets
 
-Average patient age
+Apply advanced SQL for analytics
 
-Patient count per service
+Think critically about business and operational performance
 
-Performance Score
-
-A weighted score combining:
-
-0.6 × Admission Rate  + 0.4 × Average Satisfaction Score
-
-## 📈 Key Insights from the Analysis
-
-✔ Services with highest patient satisfaction
-✔ Underperforming services with low admission rates
-✔ Staff availability vs patient volume
-✔ Long-stay services vs short-stay services
-✔ Event impact (festivals, emergencies) on satisfaction & morale
-✔ Services with high refusal rates needing attention
-✔ High-utilization vs low-utilization staff
+Build dashboard-ready insights
